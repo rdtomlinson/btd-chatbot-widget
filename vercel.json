@@ -1,5 +1,2 @@
 {
-  "rewrites": [
-    { "source": "/btd-chatbot-widget.js", "destination": "/public/btd-chatbot-widget.js" }
-  ]
 }
