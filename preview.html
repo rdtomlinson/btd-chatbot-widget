@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Black Tie Dinner · Guest Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=Big+Shoulders+Display:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --venetian: #9B3A2A;
+    --venetian-light: #B8503E;
+    --cream: #F5EFE0;
+    --gold: #C9973A;
+    --gold-light: #D4A84A;
+    --charcoal: #1A1714;
+    --charcoal-mid: #2E2926;
+    --charcoal-light: #3D3834;
+    --text-muted: rgba(245,239,224,0.55);
+    --text-dim: rgba(245,239,224,0.35);
+    --border: rgba(201,151,58,0.2);
+    --border-strong: rgba(201,151,58,0.4);
+  }
+  html, body { height: 100%; background: var(--charcoal); color: var(--cream); font-family: 'Cormorant Garamond', Georgia, serif; overflow: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background: radial-gradient(ellipse 80% 60% at 10% 20%, rgba(155,58,42,0.12) 0%, transparent 60%), radial-gradient(ellipse 60% 80% at 90% 80%, rgba(122,155,173,0.08) 0%, transparent 60%); pointer-events: none; z-index: 0; }
+  .layout { position: relative; z-index: 1; display: flex; height: 100vh; max-width: 1100px; margin: 0 auto; padding: 0 2rem; align-items: stretch; }
+  .brand-panel { flex: 0 0 340px; display: flex; flex-direction: column; justify-content: center; padding: 3rem 3rem 3rem 0; border-right: 0.5px solid var(--border); }
+  .ornament { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+  .orn-line { height: 0.5px; width: 40px; }
+  .orn-line-l { background: linear-gradient(90deg, transparent, var(--gold)); }
+  .orn-line-r { background: linear-gradient(90deg, var(--gold), transparent); }
+  .orn-diamond { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+  .eyebrow { font-family: 'Cinzel', serif; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .brand-panel h1 { font-family: 'Cinzel', serif; font-size: clamp(22px, 3vw, 34px); font-weight: 500; letter-spacing: 0.06em; color: var(--cream); line-height: 1.2; margin-bottom: 8px; }
+  .brand-panel .theme { font-family: 'Cormorant Garamond', serif; font-size: clamp(16px, 2vw, 22px); font-weight: 300; font-style: italic; letter-spacing: 0.14em; color: var(--gold); margin-bottom: 28px; }
+  .divider { width: 40px; height: 0.5px; background: var(--border-strong); margin-bottom: 28px; }
+  .brand-panel .tagline { font-size: 15px; color: var(--text-muted); line-height: 1.75; font-style: italic; margin-bottom: 32px; }
+  .info-items { display: flex; flex-direction: column; gap: 14px; }
+  .info-item { display: flex; gap: 12px; align-items: flex-start; }
+  .info-item-label { font-family: 'Big Shoulders Display', sans-serif; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); font-weight: 300; flex-shrink: 0; width: 60px; padding-top: 2px; }
+  .info-item-value { font-size: 14px; color: var(--text-muted); line-height: 1.5; font-style: italic; }
+  .brand-footer { margin-top: auto; padding-top: 2rem; }
+  .brand-footer a { font-family: 'Cinzel', serif; font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--border-strong); text-decoration: none; transition: color 0.2s; }
+  .brand-footer a:hover { color: var(--gold); }
+  .chat-panel { flex: 1; display: flex; flex-direction: column; padding: 2rem 0 2rem 3rem; min-width: 0; }
+  .chat-panel-header { flex-shrink: 0; padding-bottom: 1.25rem; border-bottom: 0.5px solid var(--border); }
+  .chat-panel-header h2 { font-family: 'Big Shoulders Display', sans-serif; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 300; color: var(--text-muted); }
+  .status-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #4CAF50; margin-right: 8px; vertical-align: middle; position: relative; top: -1px; }
+  #chat-window { flex: 1; overflow-y: auto; padding: 1.5rem 0; display: flex; flex-direction: column; gap: 14px; scroll-behavior: smooth; }
+  #chat-window::-webkit-scrollbar { width: 3px; }
+  #chat-window::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 2px; }
+  .msg { display: flex; gap: 10px; align-items: flex-end; animation: fadeUp 0.25s ease; }
+  .msg.user { flex-direction: row-reverse; }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Cinzel', serif; font-size: 8px; letter-spacing: 0.04em; flex-shrink: 0; }
+  .avatar.bot { background: var(--gold); color: var(--charcoal); }
+  .avatar.user { background: var(--charcoal-light); color: var(--cream); border: 0.5px solid var(--border-strong); }
+  .bubble { padding: 11px 16px; border-radius: 16px; font-size: 15px; line-height: 1.6; max-width: 82%; font-family: 'Cormorant Garamond', serif; }
+  .msg.bot .bubble { background: var(--charcoal-mid); color: var(--cream); border: 0.5px solid var(--border); border-bottom-left-radius: 4px; }
+  .msg.user .bubble { background: var(--venetian); color: var(--cream); border-bottom-right-radius: 4px; }
+  .typing-bubble { background: var(--charcoal-mid); border: 0.5px solid var(--border); border-radius: 16px; border-bottom-left-radius: 4px; padding: 13px 18px; display: flex; gap: 5px; align-items: center; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); opacity: 0.4; animation: pulse 1.3s infinite; }
+  .dot:nth-child(2){animation-delay:0.2s} .dot:nth-child(3){animation-delay:0.4s}
+  @keyframes pulse{0%,80%,100%{opacity:0.25}40%{opacity:0.9}}
+  #suggestions { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 0 1rem; flex-shrink: 0; }
+  .chip { background: transparent; border: 0.5px solid var(--border-strong); border-radius: 20px; padding: 7px 15px; font-size: 13px; cursor: pointer; color: var(--text-muted); font-family: 'Cormorant Garamond', serif; font-style: italic; transition: all 0.18s; }
+  .chip:hover { background: rgba(201,151,58,0.08); border-color: var(--gold); color: var(--cream); }
+  .input-area { flex-shrink: 0; border-top: 0.5px solid var(--border); padding-top: 1rem; }
+  #input-row { display: flex; gap: 10px; align-items: flex-end; }
+  #user-input { flex: 1; background: var(--charcoal-mid); border: 0.5px solid var(--border-strong); border-radius: 22px; padding: 11px 18px; font-size: 15px; font-family: 'Cormorant Garamond', serif; color: var(--cream); resize: none; line-height: 1.5; max-height: 100px; overflow-y: auto; transition: border-color 0.18s; }
+  #user-input::placeholder { color: var(--text-dim); font-style: italic; }
+  #user-input:focus { outline: none; border-color: var(--gold); }
+  #send-btn { width: 42px; height: 42px; border-radius: 50%; background: var(--venetian); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: all 0.18s; }
+  #send-btn:hover { background: var(--venetian-light); transform: scale(1.04); }
+  #send-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  #send-btn svg { width: 17px; height: 17px; fill: var(--cream); }
+  .disclaimer { font-family: 'Big Shoulders Display', sans-serif; font-size: 10px; letter-spacing: 0.1em; color: var(--text-dim); text-align: center; margin-top: 10px; text-transform: uppercase; font-weight: 300; }
+  .disclaimer a { color: var(--gold); text-decoration: none; opacity: 0.7; }
+  @media (max-width: 700px) { html, body { overflow: auto; } .layout { flex-direction: column; height: auto; padding: 0 1.25rem; } .brand-panel { flex: none; border-right: none; border-bottom: 0.5px solid var(--border); padding: 2.5rem 0 2rem; } .chat-panel { padding: 1.5rem 0 2rem; height: 70vh; } .info-items { display: none; } }
+</style>
+</head>
+<body>
+<div class="layout">
+  <div class="brand-panel">
+    <div>
+      <div class="ornament">
+        <div class="orn-line orn-line-l"></div>
+        <div class="orn-diamond"></div>
+        <div class="orn-line orn-line-r"></div>
+      </div>
+      <p class="eyebrow">45th Annual · Dallas, Texas</p>
+      <h1>Black Tie Dinner</h1>
+      <p class="theme">Renaissance</p>
+      <div class="divider"></div>
+      <p class="tagline">Have a question about the event? I'm here to help with tickets, logistics, sponsorships, and more.</p>
+      <div class="info-items">
+        <div class="info-item">
+          <span class="info-item-label">Date</span>
+          <span class="info-item-value">[EVENT_DATE_PLACEHOLDER]</span>
+        </div>
+        <div class="info-item">
+          <span class="info-item-label">Venue</span>
+          <span class="info-item-value">[VENUE_NAME_PLACEHOLDER]</span>
+        </div>
+        <div class="info-item">
+          <span class="info-item-label">Attire</span>
+          <span class="info-item-value">Black tie formal</span>
+        </div>
+        <div class="info-item">
+          <span class="info-item-label">Tickets</span>
+          <span class="info-item-value"><a href="[TICKET_URL_PLACEHOLDER]" style="color:var(--gold);text-decoration:none;">Purchase here</a></span>
+        </div>
+      </div>
+    </div>
+    <div class="brand-footer">
+      <a href="https://blacktie.org" target="_blank">blacktie.org</a>
+    </div>
+  </div>
+
+  <div class="chat-panel">
+    <div class="chat-panel-header">
+      <h2><span class="status-dot"></span>Guest Services</h2>
+    </div>
+    <div id="chat-window" role="log" aria-live="polite"></div>
+    <div id="suggestions">
+      <button class="chip" onclick="sendChip(this)">How do I buy tickets?</button>
+      <button class="chip" onclick="sendChip(this)">What's the dress code?</button>
+      <button class="chip" onclick="sendChip(this)">Where is the event?</button>
+      <button class="chip" onclick="sendChip(this)">Sponsorship opportunities</button>
+      <button class="chip" onclick="sendChip(this)">Parking & arrival</button>
+    </div>
+    <div class="input-area">
+      <div id="input-row">
+        <textarea id="user-input" placeholder="Ask us anything about the event…" rows="1" aria-label="Your message"></textarea>
+        <button id="send-btn" onclick="handleSend()" aria-label="Send">
+          <svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+        </button>
+      </div>
+      <p class="disclaimer">AI-generated responses · Questions? <a href="mailto:[CONTACT_EMAIL_PLACEHOLDER]">[CONTACT_EMAIL_PLACEHOLDER]</a></p>
+    </div>
+  </div>
+</div>
+
+<script>
+const SYSTEM_PROMPT = `You are a warm, knowledgeable guest services assistant for Black Tie Dinner — a premier annual fundraising gala in Dallas, Texas that raises funds for LGBTQ+ supportive organizations. This is the 45th annual event, themed "Renaissance."
+
+Your tone: warm, elegant, confident, and slightly concise. You represent a premier event, not a casual gathering. Be friendly but polished. Never use hashtags. Never say "make a difference" or "change lives."
+
+IMPORTANT RULES:
+- Only answer questions about this event: tickets, logistics, sponsorships, parking, dress code, table selection, and general event info.
+- If you do not know something or the info has not been provided, say: "I don't have that detail on hand. Please reach out to our team directly at [CONTACT_EMAIL_PLACEHOLDER] and they'll be happy to help."
+- Never make up specific details. Use only the info below.
+- Keep responses under 120 words unless more detail is genuinely needed.
+
+EVENT INFORMATION:
+- Event name: Black Tie Dinner (always written in full)
+- Theme: Renaissance
+- Year: 45th Annual
+- Date: [EVENT_DATE_PLACEHOLDER]
+- Venue: [VENUE_NAME_PLACEHOLDER], [VENUE_ADDRESS_PLACEHOLDER], Dallas, TX
+- Cocktail hour: [COCKTAIL_HOUR_TIME_PLACEHOLDER]
+- Dinner and program begin: [DINNER_TIME_PLACEHOLDER]
+- Attire: Black tie formal (gowns, tuxedos, black tie creative welcome)
+- Parking: [PARKING_INFO_PLACEHOLDER]
+- Accessibility: [ACCESSIBILITY_INFO_PLACEHOLDER]
+
+TICKETS:
+- Ticket sales URL: [TICKET_URL_PLACEHOLDER]
+- Individual ticket price: $[INDIVIDUAL_PRICE_PLACEHOLDER]
+- Table of 10 price: $[TABLE_PRICE_PLACEHOLDER]
+- VIP / premium experiences: [VIP_OPTIONS_PLACEHOLDER]
+- Payment methods: [PAYMENT_METHODS_PLACEHOLDER]
+- Ticket support: [TICKET_SUPPORT_EMAIL_PLACEHOLDER]
+
+SPONSORSHIPS:
+- Sponsorship inquiries: [SPONSORSHIP_CONTACT_PLACEHOLDER]
+- Sponsorship levels: [SPONSORSHIP_LEVELS_PLACEHOLDER]
+- Sponsor benefits: [SPONSOR_BENEFITS_PLACEHOLDER]
+
+CONTACT:
+- General inquiries: [CONTACT_EMAIL_PLACEHOLDER]
+- Website: blacktie.org`;
+
+let history = [], isLoading = false;
+
+function addMessage(role, text) {
+  const win = document.getElementById('chat-window');
+  const wrap = document.createElement('div');
+  wrap.className = 'msg ' + (role === 'user' ? 'user' : 'bot');
+  const av = document.createElement('div');
+  av.className = 'avatar ' + (role === 'user' ? 'user' : 'bot');
+  av.textContent = role === 'user' ? 'You' : 'BTD';
+  const bub = document.createElement('div');
+  bub.className = 'bubble';
+  bub.textContent = text;
+  if (role === 'user') { wrap.appendChild(bub); wrap.appendChild(av); }
+  else { wrap.appendChild(av); wrap.appendChild(bub); }
+  win.appendChild(wrap);
+  win.scrollTop = win.scrollHeight;
+}
+
+function addTyping() {
+  const win = document.getElementById('chat-window');
+  const wrap = document.createElement('div');
+  wrap.className = 'msg bot'; wrap.id = 'typing-indicator';
+  const av = document.createElement('div');
+  av.className = 'avatar bot'; av.textContent = 'BTD';
+  const tb = document.createElement('div');
+  tb.className = 'typing-bubble';
+  tb.innerHTML = '<div class="dot"></div><div class="dot"></div><div class="dot"></div>';
+  wrap.appendChild(av); wrap.appendChild(tb);
+  win.appendChild(wrap);
+  win.scrollTop = win.scrollHeight;
+}
+
+function removeTyping() { const t = document.getElementById('typing-indicator'); if (t) t.remove(); }
+function autoResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 100) + 'px'; }
+
+async function ask(userText) {
+  if (isLoading || !userText.trim()) return;
+  isLoading = true;
+  document.getElementById('send-btn').disabled = true;
+  document.getElementById('suggestions').style.display = 'none';
+  addMessage('user', userText);
+  history.push({ role: 'user', content: userText });
+  addTyping();
+  try {
+    const res = await fetch('https://btd-chatbot-widget.vercel.app/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: history, system: SYSTEM_PROMPT })
+    });
+    const data = await res.json();
+    const reply = data.reply || 'I\'m having a little trouble right now. Please reach out to us at [CONTACT_EMAIL_PLACEHOLDER].';
+    removeTyping(); addMessage('bot', reply);
+    history.push({ role: 'assistant', content: reply });
+  } catch(e) {
+    removeTyping();
+    addMessage('bot', 'I\'m having a little trouble right now. Please reach out to us at [CONTACT_EMAIL_PLACEHOLDER].');
+  }
+  isLoading = false;
+  document.getElementById('send-btn').disabled = false;
+}
+
+function handleSend() {
+  const inp = document.getElementById('user-input');
+  const val = inp.value.trim();
+  if (!val) return;
+  inp.value = ''; inp.style.height = 'auto'; ask(val);
+}
+
+function sendChip(el) { ask(el.textContent.trim()); }
+document.getElementById('user-input').addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } });
+document.getElementById('user-input').addEventListener('input', function() { autoResize(this); });
+
+setTimeout(() => {
+  addMessage('bot', 'Welcome to Black Tie Dinner\'s Renaissance — our 45th annual gala. I\'m here to help with tickets, event logistics, sponsorships, and more. What can I help you with?');
+}, 350);
+</script>
+</body>
+</html>
