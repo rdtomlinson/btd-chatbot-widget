@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BTD Chatbot — Widget Preview</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --venetian: #9B3A2A;
+    --cream: #F5EFE0;
+    --gold: #C9973A;
+    --charcoal: #1A1714;
+    --charcoal-mid: #2E2926;
+    --border: rgba(201,151,58,0.2);
+  }
+  html, body { height: 100%; background: var(--charcoal); color: var(--cream); font-family: 'Cormorant Garamond', Georgia, serif; }
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(155,58,42,0.1) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 80% at 90% 80%, rgba(122,155,173,0.07) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .page {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    text-align: center;
+  }
+  .ornament {
+    display: flex; align-items: center; justify-content: center;
+    gap: 10px; margin-bottom: 14px;
+  }
+  .orn-line { height: 0.5px; width: 50px; }
+  .orn-line-l { background: linear-gradient(90deg, transparent, var(--gold)); }
+  .orn-line-r { background: linear-gradient(90deg, var(--gold), transparent); }
+  .orn-diamond { width: 5px; height: 5px; background: var(--gold); transform: rotate(45deg); flex-shrink: 0; }
+  .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 9px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(24px, 5vw, 42px);
+    font-weight: 500; letter-spacing: 0.06em;
+    color: var(--cream); line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  h1 span {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(14px, 2.5vw, 20px);
+    font-weight: 300; font-style: italic;
+    letter-spacing: 0.14em; color: var(--gold);
+    margin-top: 4px;
+  }
+  .subtitle {
+    font-size: clamp(13px, 2vw, 16px);
+    color: rgba(245,239,224,0.45);
+    margin-top: 20px; line-height: 1.7;
+    max-width: 420px;
+    font-style: italic;
+  }
+  .arrow-hint {
+    position: fixed;
+    bottom: 90px; right: 36px;
+    display: flex; flex-direction: column;
+    align-items: flex-end; gap: 6px;
+    opacity: 0.55;
+    animation: nudge 2.5s ease-in-out infinite;
+  }
+  .arrow-hint p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px; font-style: italic;
+    color: var(--gold); letter-spacing: 0.06em;
+  }
+  .arrow-hint svg { width: 22px; height: 22px; fill: none; stroke: var(--gold); stroke-width: 1.5; }
+  @keyframes nudge {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(5px); }
+  }
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&display=swap');
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=Big+Shoulders+Display:wght@300&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="page">
+  <div class="ornament">
+    <div class="orn-line orn-line-l"></div>
+    <div class="orn-diamond"></div>
+    <div class="orn-line orn-line-r"></div>
+  </div>
+  <p class="eyebrow">45th Annual · Dallas, Texas</p>
+  <h1>Black Tie Dinner<span>Renaissance</span></h1>
+  <p class="subtitle">Guest services widget preview.<br>Tap the button in the bottom right to open the chat.</p>
+</div>
+
+<div class="arrow-hint">
+  <p>Open chat</p>
+  <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+
+<script src="./public/btd-chatbot-widget.js" defer></script>
+</body>
+</html>
